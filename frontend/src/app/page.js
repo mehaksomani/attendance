@@ -2,8 +2,6 @@ import Navbar from "../components/Navbar/Navbar";
 
 export default function Home() {
   return (
-    <>
-      <Navbar />
       <div className="p-8 bg-white min-h-screen">
         <h1 className="text-4xl font-bold text-blue-700 underline mb-4">
           Hello Tailwind!
@@ -12,6 +10,5 @@ export default function Home() {
           Tailwind CSS is now integrated correctly and your Navbar is working!
         </p>
       </div>
-    </>
   );
 }
