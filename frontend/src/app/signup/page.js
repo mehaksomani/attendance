@@ -1,6 +1,7 @@
 "use client"; // Required for client components
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
   const [fullName, setFullName] = useState("");
@@ -8,19 +9,34 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
+  const router = useRouter();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Signup details:", {
-      fullName,
-      employeeId,
-      email,
-      password,
-      otp,
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const userData = { fullName, employeeId, email, password, otp };
+
+  try {
+    const res = await fetch("/api/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
     });
 
-    // You can replace this with an API call later
-  };
+    if (res.ok) {
+      alert("User registered successfully!");
+      router.push("/login"); // optional: navigate to login page
+    } else {
+      const error = await res.json();
+      alert("Error: " + error.message);
+    }
+  } catch (err) {
+    alert("Error submitting form: " + err.message);
+  }
+};
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-blue-100">
